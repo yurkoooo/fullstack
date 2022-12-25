@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useLocation} from 'react-router-dom';    
 
-function Detailed() {
+function Detailed({url}) {
 
   const [detailed, setDetailed] = useState([]);
   let location = useLocation();
@@ -10,7 +10,7 @@ function Detailed() {
     }, [])
 
     const getDetailedArticle = () => {
-        fetch('http://test3.ua', {
+        fetch(url, {
             method: 'POST',
             header : {
             'content-type' : "application/json"

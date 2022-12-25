@@ -7,14 +7,19 @@ import {
 
 import { useEffect, useState } from 'react';
 
-function Main() {
+function Main({url}) {
 
   const [articles, setArticles] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [articlesPerPage] = useState(5);
+  const pageNumbers = [];
+    
+    for(let i = 1; i <= Math.ceil((articles.length / articlesPerPage)); i++) {
+        pageNumbers.push(i);
+    }
 
   const getArticles = () => {
-    fetch('http://test3.ua', {
+    fetch(url, {
       method: 'POST',
       header : {
       'content-type' : "application/json"
@@ -45,9 +50,9 @@ function Main() {
 
   const paginate = pageNumber => setCurrentPage(pageNumber);
 
-  const prevPage = () => setCurrentPage(prev => currentPage <= 1 ? 4 : prev - 1);
+  const prevPage = () => setCurrentPage(prev => currentPage <= 1 ? pageNumbers.length : prev - 1);
 
-  const nextPage = () => setCurrentPage(prev => currentPage >= 4 ? 1 : prev + 1);
+  const nextPage = () => setCurrentPage(prev => currentPage >= pageNumbers.length ? 1 : prev + 1);
 
     return (
       <>
@@ -71,7 +76,7 @@ function Main() {
                   ))}
             </div>
             <Pagination 
-            jobsPerPage={articlesPerPage}
+            articlesPerPage={articlesPerPage}
             totalArticles={articles}
             paginate={paginate}
             prevPage={prevPage}

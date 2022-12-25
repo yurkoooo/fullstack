@@ -3,7 +3,7 @@ import {
   useNavigate
 } from "react-router-dom";
 
-function Login() {
+function Login({url}) {
 
   const [login, setLogin] = useState('');
   const [incorrectLogin, setIncorrectLogin] = useState(false);
@@ -55,7 +55,7 @@ function Login() {
 
   const onSubmit = () => {
     if (login !== '' && password !== '') {
-        fetch('http://test3.ua/login.php', {
+        fetch(`${url}/login.php`, {
           method: 'POST',
           header : {
           'content-type' : "application/json"
@@ -89,8 +89,6 @@ function Login() {
           document.cookie = `hash=${token[0]['hash']};expires=`+now.toUTCString()+';path=/';
           navigation('/admin');
         }
-      } else {
-        console.log(token);
       }
     }
   }

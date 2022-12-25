@@ -3,7 +3,7 @@ import {
   useNavigate
 } from "react-router-dom";
 
-function CreateArticle() {
+function CreateArticle({url}) {
 
     const [categories, setCategories] = useState([]);
     const [title, setTitle] = useState('');
@@ -19,7 +19,7 @@ function CreateArticle() {
     }, [])
 
     const getCategories = () => {
-        fetch('http://test3.ua', {
+        fetch(url, {
             method: 'POST',
             header : {
             'content-type' : "application/json"
@@ -44,7 +44,7 @@ function CreateArticle() {
             const formData = new FormData();
             formData.append('img', img);
             formData.append('file', file, 'create.json');
-            fetch('http://test3.ua/createArticle.php', {
+            fetch(`${url}/createArticle.php`, {
             method: 'POST',
             body : formData
             })

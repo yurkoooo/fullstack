@@ -3,7 +3,7 @@ import {
   useNavigate
 } from "react-router-dom";
 
-function Categories() {
+function Categories({url}) {
     
     const [categories, setCategories] = useState([]);
 
@@ -12,7 +12,7 @@ function Categories() {
     }, [])
 
     const getCategories = () => {
-        fetch('http://test3.ua', {
+        fetch(url, {
             method: 'POST',
             header : {
             'content-type' : "application/json"
@@ -31,7 +31,6 @@ function Categories() {
 
     return (
       <>
-      {console.log(categories)}
        <section className='w-[65%] order-2'>
             <h2 className='text-center mt-[50px] font-semibold text-[35px] mb-[50px]'>Categories</h2>
             <div className='flex flex-col justify-center items-center'>

@@ -3,7 +3,7 @@ import {
   useNavigate
 } from "react-router-dom";
 
-function Register() {
+function Register({url}) {
 
   const [login, setLogin] = useState('');
   const [isExist, setIsExist] = useState('');
@@ -35,7 +35,7 @@ function Register() {
 
     const onSubmit = () => {
       if (login !== '' && password !== '') {
-          fetch('http://test3.ua/register.php', {
+          fetch(`${url}/register.php`, {
             method: 'POST',
             header : {
             'content-type' : "application/json"
@@ -57,7 +57,7 @@ function Register() {
 
     const createNewUser = () => {
       if (login !== '' && password !== '' && isExist !== 'exist' && isExist !== '') {
-        fetch('http://test3.ua/register.php', {
+        fetch(`${url}/register.php`, {
           method: 'POST',
           header : {
           'content-type' : "application/json"

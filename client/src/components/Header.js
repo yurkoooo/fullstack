@@ -20,6 +20,7 @@ import { useEffect, useState } from 'react';
 function Header() {
 
   const [heading, setHeading] = useState('Main');
+  const [url] = useState(process.env.REACT_APP_URL);
   let hasNumber = /\d/;
 
 
@@ -48,15 +49,15 @@ function Header() {
     return (
       <>
        <Routes>
-        <Route exact path='/' element={<Main/>} />
-        <Route path='/login' element={<Login/>} />
-        <Route path='/register' element={<Register/>} />
-        <Route path='/categories' element={<Categories/>} />
-        <Route path='/categories/:id' element={<Category/>} />
-        <Route path='/:id' element={<Detailed/>} />
-        <Route path='/admin' element={<Admin/>} />
-        <Route path='/admin/createArticle' element={<CreateArticle/>} />
-        <Route path='/admin/:id' element={<EditArticle/>} />
+        <Route exact path='/' element={<Main url={url}/>} />
+        <Route path='/login' element={<Login url={url}/>} />
+        <Route path='/register' element={<Register url={url}/>} />
+        <Route path='/categories' element={<Categories url={url}/>} />
+        <Route path='/categories/:id' element={<Category url={url}/>} />
+        <Route path='/:id' element={<Detailed url={url}/>} />
+        <Route path='/admin' element={<Admin url={url}/>} />
+        <Route path='/admin/createArticle' element={<CreateArticle url={url}/>} />
+        <Route path='/admin/:id' element={<EditArticle url={url}/>} />
         </Routes>
       <header className='min-h-[100vh] w-[35%] flex justify-center items-center flex-col bg-[darkcyan] order-1'>
         <div className='flex flex-col items-center fixed top-[40%]'>

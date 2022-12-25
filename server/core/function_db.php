@@ -1,30 +1,24 @@
 <?php
 
 function connect(){
-    $conn = mysqli_connect(SERVER, USER, PASSWORD, DB);
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-    mysqli_set_charset($conn, "utf8");
+    $conn = new PDO('mysql:host='.SERVER.';dbname='.DB.'', USER, PASSWORD);
     return $conn;
 }
 
 function select($query) {
     global $conn;
+    $result = $conn->prepare($query);
+    $result->execute();
+    $queryResult = $result->fetchAll();
+    if ($queryResult === false) {
     $queryResult = [];
-    $result = mysqli_query($conn, $query);
-
-    if (mysqli_num_rows($result) > 0) {
-        while($row = mysqli_fetch_assoc($result)) {
-            $queryResult[] = $row;
-        }
     }
     return $queryResult;
 }
 
 function execQuery($query) {
     global $conn;
-    if (mysqli_query($conn, $query)){
+    if ($conn->exec($query) > 0){
         return true;
     }
     return false;

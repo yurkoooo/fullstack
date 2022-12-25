@@ -5,13 +5,18 @@ import {
 } from "react-router-dom";
 
 
-function Admin() {
+function Admin({url}) {
 
     const [articles, setArticles] = useState([]);
     const [change, setChange] = useState('');
     const [login, setLogin] = useState(''); 
     const [currentPage, setCurrentPage] = useState(1);
     const [articlesPerPage] = useState(5);
+    const pageNumbers = [];
+    
+    for(let i = 1; i <= Math.ceil((articles.length / articlesPerPage)); i++) {
+        pageNumbers.push(i);
+    }
 
   let navigation = useNavigate();
   
@@ -30,7 +35,7 @@ function Admin() {
   }, [])
 
   const getUser = (id, hash) => {
-    fetch('http://test3.ua/login.php', {
+    fetch(`${url}/login.php`, {
           method: 'POST',
           header : {
           'content-type' : "application/json"
@@ -46,7 +51,7 @@ function Admin() {
 
 
   const getArticles = () => {
-    fetch('http://test3.ua', {
+    fetch(url, {
       method: 'POST',
       header : {
       'content-type' : "application/json"
@@ -67,7 +72,7 @@ function Admin() {
   const removeArticle = (e) => {
     let result = window.confirm('Are you sure?');
     if (result) {
-      fetch('http://test3.ua/admin.php', {
+      fetch(`${url}/admin.php`, {
       method: 'POST',
       header : {
       'content-type' : "application/json"
@@ -93,9 +98,9 @@ function Admin() {
 
   const paginate = pageNumber => setCurrentPage(pageNumber);
 
-  const prevPage = () => setCurrentPage(prev => currentPage <= 1 ? 4 : prev - 1);
+  const prevPage = () => setCurrentPage(prev => currentPage <= 1 ? pageNumbers.length : prev - 1);
 
-  const nextPage = () => setCurrentPage(prev => currentPage >= 4 ? 1 : prev + 1);
+  const nextPage = () => setCurrentPage(prev => currentPage >= pageNumbers.length ? 1 : prev + 1);
 
     return (
       <>
@@ -129,7 +134,7 @@ function Admin() {
                 </div>
             </div>
             <Pagination 
-            jobsPerPage={articlesPerPage}
+            articlesPerPage={articlesPerPage}
             totalArticles={articles}
             paginate={paginate}
             prevPage={prevPage}

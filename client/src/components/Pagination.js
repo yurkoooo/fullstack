@@ -1,10 +1,10 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 
- export default function Pagination ({jobsPerPage, totalArticles, paginate, nextPage, prevPage, currentPage}) {
+ export default function Pagination ({articlesPerPage, totalArticles, paginate, nextPage, prevPage, currentPage}) {
     
     const pageNumbers = [];
     
-    for(let i = 1; i <= Math.ceil((totalArticles.length / jobsPerPage)); i++) {
+    for(let i = 1; i <= Math.ceil((totalArticles.length / articlesPerPage)); i++) {
         pageNumbers.push(i);
     }
 

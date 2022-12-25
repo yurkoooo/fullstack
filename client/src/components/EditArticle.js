@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';   
 
-function EditArticle() {
+function EditArticle({url}) {
 
     let location = useLocation();
 
@@ -16,7 +16,7 @@ function EditArticle() {
     let navigation = useNavigate();
   
   const getDetailedArticle = () => {
-    fetch('http://test3.ua', {
+    fetch(url, {
         method: 'POST',
         header : {
         'content-type' : "application/json"
@@ -34,7 +34,7 @@ function EditArticle() {
   }
 
   const getCategories = () => {
-    fetch('http://test3.ua', {
+    fetch(url, {
         method: 'POST',
         header : {
         'content-type' : "application/json"
@@ -65,7 +65,7 @@ function EditArticle() {
             const file = new File([ blob ], 'edit.json');
             const formData = new FormData();
             formData.append('file', file, 'edit.json');
-            fetch('http://test3.ua/editArticle.php', {
+            fetch(`${url}/editArticle.php`, {
             method: 'POST',
             body : formData
         })
@@ -84,7 +84,7 @@ function EditArticle() {
             const formData = new FormData();
             formData.append('img', img);
             formData.append('file', file, 'edit.json');
-            fetch('http://test3.ua/editArticle.php', {
+            fetch(`${url}/editArticle.php`, {
             method: 'POST',
             body : formData
             })

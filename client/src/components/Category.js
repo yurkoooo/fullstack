@@ -6,12 +6,17 @@ import {
 } from "react-router-dom";
 
 
-function Category() {
+function Category({url}) {
     
     const [category, setCategory] = useState([]);
     const [nameCategory, setNameCategory] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [articlesPerPage] = useState(5);
+    const pageNumbers = [];
+    
+    for(let i = 1; i <= Math.ceil((category.length / articlesPerPage)); i++) {
+        pageNumbers.push(i);
+    }
 
     let location = useLocation();
 
@@ -21,7 +26,7 @@ function Category() {
     }, [])
 
     const getCategory = () => {
-        fetch('http://test3.ua', {
+        fetch(url, {
             method: 'POST',
             header : {
             'content-type' : "application/json"
@@ -33,7 +38,7 @@ function Category() {
     }
 
     const getNameCategory = () => {
-        fetch('http://test3.ua', {
+        fetch(url, {
             method: 'POST',
             header : {
             'content-type' : "application/json"
@@ -56,9 +61,9 @@ function Category() {
   
     const paginate = pageNumber => setCurrentPage(pageNumber);
   
-    const prevPage = () => setCurrentPage(prev => currentPage <= 1 ? 4 : prev - 1);
-  
-    const nextPage = () => setCurrentPage(prev => currentPage >= 4 ? 1 : prev + 1);
+    const prevPage = () => setCurrentPage(prev => currentPage <= 1 ? pageNumbers.length : prev - 1);
+
+    const nextPage = () => setCurrentPage(prev => currentPage >= pageNumbers.length ? 1 : prev + 1);
 
     return (
       <>
@@ -92,7 +97,7 @@ function Category() {
                     ))}
             </div>
             <Pagination 
-            jobsPerPage={articlesPerPage}
+            articlesPerPage={articlesPerPage}
             totalArticles={category}
             paginate={paginate}
             prevPage={prevPage}
